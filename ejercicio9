@@ -1,0 +1,202 @@
+# Ejercicio 9: Matriz lógica de asistencia
+
+Solicite el número de estudiantes y el número de días. Para cada estudiante registre su asistencia mediante P (presente) o A (ausente). Al finalizar muestre las asistencias y ausencias de cada estudiante y los totales del curso.
+
+Estructura sugerida: for anidado. Conceptos: Ciclos anidados, contadores y validación.
+
+---
+2. ANÁLISIS
+-Validación de Entradas:
+  - `numEstudiantes` debe ser un entero estrictamente mayor a 0 (> 0).
+  - `numDias` debe ser un entero strictly mayor a 0 (> 0).
+  - `estado` de asistencia se debe validar para que acepte únicamente los caracteres 'P', 'p', 'A' o 'a'.
+- Estructura Repetitiva:
+  - Se utiliza un ciclo `for` externo para iterar desde el estudiante 1 hasta `numEstudiantes`.
+  - Se utiliza un ciclo `for` interno para iterar desde el día 1 hasta `numDias`.
+- Contadores:
+  - Contadores individuales por estudiante: `asistenciasEstudiante` y `ausenciasEstudiante` (se reinician por cada estudiante).
+  - Contadores globales del curso: `totalAsistenciasCurso` y `totalAusenciasCurso` (se acumulan durante toda la ejecución).
+
+---
+
+3. ENTRADAS / PROCESOS / SALIDAS
+- Entradas:
+  - `numEstudiantes` (Entero > 0)
+  - `numDias` (Entero > 0)
+  - `estado` (Carácter: 'P' o 'A')
+- Procesos:
+  1. Validar `numEstudiantes` y `numDias`.
+  2. Iterar por cada estudiante (1 a `numEstudiantes`).
+  3. Para cada estudiante, iterar por cada día (1 a `numDias`).
+  4. Leer y validar `estado` ('P' o 'A').
+  5. Contabilizar asistencias o ausencias individuales y grupales.
+  6. Imprimir resumen individual.
+- Salidas:
+  - Total de asistencias y ausencias por cada estudiante.
+  - Total consolidado de asistencias y ausencias de todo el curso.
+
+---
+
+4. ALGORITMO
+1. Inicio.
+2. Leer y validar `numEstudiantes` (> 0).
+3. Leer y validar `numDias` (> 0).
+4. Inicializar `totalAsistenciasCurso = 0` y `totalAusenciasCurso = 0`.
+5. Desde `i = 1` hasta `numEstudiantes` con paso 1 hacer:
+   1. Inicializar `asistenciasEstudiante = 0` y `ausenciasEstudiante = 0`.
+   2. Desde `j = 1` hasta `numDias` con paso 1 hacer:
+      1. Leer y validar `estado` (debe ser 'P' o 'A').
+      2. Si `estado == 'P'`:
+         - Incrementar `asistenciasEstudiante` en 1.
+         - Incrementar `totalAsistenciasCurso` en 1.
+      3. Si no (`estado == 'A'`):
+         - Incrementar `ausenciasEstudiante` en 1.
+         - Incrementar `totalAusenciasCurso` en 1.
+   3. Mostrar `asistenciasEstudiante` y `ausenciasEstudiante`.
+6. Mostrar `totalAsistenciasCurso` y `totalAusenciasCurso`.
+7. Fin.
+
+---
+5. PSEUDOCÓDIGO
+```text
+Algoritmo MatrizLogicaAsistencia
+    Definir numEstudiantes, numDias, i, j Como Entero
+    Definir asistenciasEstudiante, ausenciasEstudiante Como Entero
+    Definir totalAsistenciasCurso, totalAusenciasCurso Como Entero
+    Definir estado Como Caracter
+    
+    totalAsistenciasCurso <- 0
+    totalAusenciasCurso <- 0
+    
+    Repetir
+        Escribir "Ingrese el número de estudiantes:"
+        Leer numEstudiantes
+    Hasta Que numEstudiantes > 0
+    
+    Repetir
+        Escribir "Ingrese el número de días a registrar:"
+        Leer numDias
+    Hasta Que numDias > 0
+    
+    Para i <- 1 Hasta numEstudiantes Con Paso 1 Hacer
+        asistenciasEstudiante <- 0
+        ausenciasEstudiante <- 0
+        Escribir "=========================================="
+        Escribir " Estudiante ", i
+        Escribir "=========================================="
+        
+        Para j <- 1 Hasta numDias Con Paso 1 Hacer
+            Repetir
+                Escribir "Día ", j, " - Ingrese asistencia (P = Presente, A = Ausente):"
+                Leer estado
+                estado <- Mayusculas(estado)
+            Hasta Que estado = "P" O estado = "A"
+            
+            Si estado = "P" Entonces
+                asistenciasEstudiante <- asistenciasEstudiante + 1
+                totalAsistenciasCurso <- totalAsistenciasCurso + 1
+            Sino
+                ausenciasEstudiante <- ausenciasEstudiante + 1
+                totalAusenciasCurso <- totalAusenciasCurso + 1
+            FinSi
+        FinPara
+        
+        Escribir "Resumen Estudiante ", i, ":"
+        Escribir " - Asistencias: ", asistenciasEstudiante
+        Escribir " - Ausencias: ", ausenciasEstudiante
+    FinPara
+    
+    Escribir "=========================================="
+    Escribir " RESUMEN GENERAL DEL CURSO"
+    Escribir "=========================================="
+    Escribir "Total Asistencias del Curso: ", totalAsistenciasCurso
+    Escribir "Total Ausencias del Curso: ", totalAusenciasCurso
+FinAlgoritmo
+
+6. JAVA
+package ejercicio09;
+
+import java.util.Scanner;
+
+public class Ejercicio09 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int numEstudiantes = 0;
+        int numDias = 0;
+        int totalAsistenciasCurso = 0;
+        int totalAusenciasCurso = 0;
+
+        System.out.println("=== CONTROL DE ASISTENCIA DEL CURSO ===");
+
+        // Validación de cantidad de estudiantes
+        do {
+            System.out.print("Ingrese la cantidad de estudiantes (> 0): ");
+            if (scanner.hasNextInt()) {
+                numEstudiantes = scanner.nextInt();
+            } else {
+                scanner.next();
+            }
+        } while (numEstudiantes <= 0);
+
+        // Validación de cantidad de días
+        do {
+            System.out.print("Ingrese la cantidad de días a registrar (> 0): ");
+            if (scanner.hasNextInt()) {
+                numDias = scanner.nextInt();
+            } else {
+                scanner.next();
+            }
+        } while (numDias <= 0);
+
+        // Ciclo anidado principal: Estudiantes y Días
+        for (int i = 1; i <= numEstudiantes; i++) {
+            int asistenciasEstudiante = 0;
+            int ausenciasEstudiante = 0;
+
+            System.out.println("\n-----------------------------------------");
+            System.out.println(" Registro para el Estudiante " + i);
+            System.out.println("-----------------------------------------");
+
+            for (int j = 1; j <= numDias; j++) {
+                char estado = ' ';
+                boolean entradaValida = false;
+
+                do {
+                    System.out.print("Día " + j + " - Asistencia [P = Presente / A = Ausente]: ");
+                    String entrada = scanner.next().trim().toUpperCase();
+
+                    if (entrada.length() == 1 && (entrada.charAt(0) == 'P' || entrada.charAt(0) == 'A')) {
+                        estado = entrada.charAt(0);
+                        entradaValida = true;
+                    } else {
+                        System.out.println("Opción inválida. Solo se permite 'P' o 'A'.");
+                    }
+                } while (!entradaValida);
+
+                if (estado == 'P') {
+                    asistenciasEstudiante++;
+                    totalAsistenciasCurso++;
+                } else {
+                    ausenciasEstudiante++;
+                    totalAusenciasCurso++;
+                }
+            }
+
+            System.out.println("\n-> Resumen Estudiante " + i + ":");
+            System.out.println("   Asistencias (P): " + asistenciasEstudiante);
+            System.out.println("   Ausencias (A):   " + ausenciasEstudiante);
+        }
+
+        System.out.println("\n=========================================");
+        System.out.println("       RESUMEN GENERAL DEL CURSO");
+        System.out.println("=========================================");
+        System.out.println("Total de Asistencias en el Curso: " + totalAsistenciasCurso);
+        System.out.println("Total de Ausencias en el Curso:   " + totalAusenciasCurso);
+
+        scanner.close();
+    }
+}
+
+
+        
