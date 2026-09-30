@@ -1,4 +1,4 @@
-# Ejercicio 9: Matriz lógica de asistencia
+Ejercicio 9: Matriz lógica de asistencia
 
 Solicite el número de estudiantes y el número de días. Para cada estudiante registre su asistencia mediante P (presente) o A (ausente). Al finalizar muestre las asistencias y ausencias de cada estudiante y los totales del curso.
 
