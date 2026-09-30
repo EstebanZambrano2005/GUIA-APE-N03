@@ -1,0 +1,219 @@
+Ejercicio 10: Sistema integrado de ventas
+
+1. PROBLEMA
+Desarrolle un sistema con menú: 1) Registrar venta, 2) Mostrar estadísticas y 3) Salir. Cada venta debe solicitar producto, cantidad y precio. Las estadísticas mostrarán número de ventas, unidades vendidas, total recaudado, venta mayor y promedio por venta.
+
+Estructura sugerida: do-while + for/while. Conceptos: Integración de menús, ciclos, acumuladores, contadores y validaciones.
+
+---
+
+2. ANÁLISIS
+- Estructura de Control Principal: Se utiliza un ciclo `do-while` para mantener el menú interactivo activo hasta que el usuario elija la opción 3 (Salir).
+- Validación de Entradas:
+  - La opción del menú debe estar entre 1 y 3.
+  - La cantidad debe ser un entero estrictamente mayor a 0.
+  - El precio unitario debe ser un valor numérico mayor a 0.
+- Acumuladores y Contadores:
+  - `totalVentas`: Cuenta la cantidad de transacciones registradas.
+  - `totalUnidades`: Suma las cantidades de productos vendidos.
+  - `totalRecaudado`: Suma el monto total en dinero de cada venta.
+  - `ventaMayor`: Registra el valor máximo vendido.
+
+---
+
+3. ENTRADAS / PROCESOS / SALIDAS
+- Entradas: `opcion`, `nombreProducto`, `cantidad`, `precioUnitario`.
+- Procesos:
+  1. Mostrar el menú de opciones y solicitar `opcion`.
+  2. Registrar venta: validar entradas, calcular `montoVenta = cantidad * precioUnitario`, actualizar contadores y comparar `ventaMayor`.
+  3. Mostrar estadísticas: calcular `promedioVenta = totalRecaudado / totalVentas` e imprimir resumen.
+- Salidas: Reporte consolidado de número de ventas, unidades, total recaudado, venta mayor y promedio.
+
+4. ALGORITMO
+1. Inicio.
+2. Inicializar `totalVentas = 0`, `totalUnidades = 0`, `totalRecaudado = 0.0`, `ventaMayor = 0.0`.
+3. Repetir:
+   1. Mostrar menú (1. Registrar venta, 2. Mostrar estadísticas, 3. Salir).
+   2. Leer `opcion`.
+   3. Si `opcion == 1`:
+      - Leer `nombreProducto`, `cantidad` (> 0) y `precioUnitario` (> 0).
+      - `montoVenta = cantidad * precioUnitario`.
+      - Incrementar `totalVentas` y `totalUnidades`.
+      - Acumular `totalRecaudado += montoVenta`.
+      - Actualizar `ventaMayor` si `montoVenta > ventaMayor`.
+   4. Si `opcion == 2`:
+      - Si `totalVentas > 0`, calcular `promedioVenta = totalRecaudado / totalVentas` y mostrar reporte.
+   5. Si `opcion == 3`: Mostrar mensaje de salida.
+4. Hasta que `opcion == 3`.
+5. Fin.
+
+---
+
+5. PSEUDOCÓDIGO
+```text
+Algoritmo SistemaIntegradoVentas
+    Definir opcion, cantidad, totalVentas, totalUnidades Como Entero
+    Definir precioUnitario, montoVenta, totalRecaudado, ventaMayor, promedioVenta Como Real
+    Definir nombreProducto Como Cadena
+    
+    totalVentas <- 0
+    totalUnidades <- 0
+    totalRecaudado <- 0.0
+    ventaMayor <- 0.0
+    
+    Repetir
+        Escribir "1) Registrar venta"
+        Escribir "2) Mostrar estadísticas"
+        Escribir "3) Salir"
+        Leer opcion
+        
+        Segun opcion Hacer
+            1:
+                Escribir "Ingrese producto:"
+                Leer nombreProducto
+                Repetir
+                    Escribir "Cantidad (> 0):"
+                    Leer cantidad
+                Hasta Que cantidad > 0
+                Repetir
+                    Escribir "Precio (> 0):"
+                    Leer precioUnitario
+                Hasta Que precioUnitario > 0
+                
+                montoVenta <- cantidad * precioUnitario
+                totalVentas <- totalVentas + 1
+                totalUnidades <- totalUnidades + cantidad
+                totalRecaudado <- totalRecaudado + montoVenta
+                
+                Si totalVentas = 1 O montoVenta > ventaMayor Entonces
+                    ventaMayor <- montoVenta
+                FinSi
+            2:
+                Si totalVentas = 0 Entonces
+                    Escribir "No hay ventas."
+                Sino
+                    promedioVenta <- totalRecaudado / totalVentas
+                    Escribir "Total Ventas: ", totalVentas
+                    Escribir "Total Unidades: ", totalUnidades
+                    Escribir "Total Recaudado: ", totalRecaudado
+                    Escribir "Venta Mayor: ", ventaMayor
+                    Escribir "Promedio Venta: ", promedioVenta
+                FinSi
+            3:
+                Escribir "Saliendo..."
+        FinSegun
+    Hasta Que opcion = 3
+FinAlgoritmo
+
+6. CODIGO JAVA
+
+import java.util.Scanner;
+
+/**
+public class Ejercicio10 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int opcion = 0;
+        int totalVentas = 0;
+        int totalUnidades = 0;
+        double totalRecaudado = 0.0;
+        double ventaMayor = 0.0;
+
+        do {
+            System.out.println("\n==========================================");
+            System.out.println("     SISTEMA INTEGRADO DE VENTAS");
+            System.out.println("==========================================");
+            System.out.println("1) Registrar venta");
+            System.out.println("2) Mostrar estadísticas");
+            System.out.println("3) Salir");
+            System.out.print("Seleccione una opción (1-3): ");
+
+            if (scanner.hasNextInt()) {
+                opcion = scanner.nextInt();
+                scanner.nextLine(); // Limpiar el buffer de entrada
+            } else {
+                System.out.println("Error: Por favor ingrese un número entero del 1 al 3.");
+                scanner.nextLine(); // Limpiar entrada no numérica
+                continue;
+            }
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("\n--- REGISTRO DE VENTA ---");
+                    System.out.print("Ingrese el nombre del producto: ");
+                    String nombreProducto = scanner.nextLine();
+
+                    int cantidad = 0;
+                    do {
+                        System.out.print("Ingrese la cantidad de unidades (> 0): ");
+                        if (scanner.hasNextInt()) {
+                            cantidad = scanner.nextInt();
+                            if (cantidad <= 0) {
+                                System.out.println("Error: La cantidad debe ser mayor a 0.");
+                            }
+                        } else {
+                            System.out.println("Error: Ingrese un valor entero válido.");
+                            scanner.next();
+                        }
+                    } while (cantidad <= 0);
+
+                    double precioUnitario = 0.0;
+                    do {
+                        System.out.print("Ingrese el precio unitario en $ (> 0): ");
+                        if (scanner.hasNextDouble()) {
+                            precioUnitario = scanner.nextDouble();
+                            if (precioUnitario <= 0) {
+                                System.out.println("Error: El precio debe ser mayor a 0.");
+                            }
+                        } else {
+                            System.out.println("Error: Ingrese un número válido.");
+                            scanner.next();
+                        }
+                    } while (precioUnitario <= 0);
+
+                    // Cálculos de la venta actual
+                    double montoVenta = cantidad * precioUnitario;
+                    totalVentas++;
+                    totalUnidades += cantidad;
+                    totalRecaudado += montoVenta;
+
+                    if (totalVentas == 1 || montoVenta > ventaMayor) {
+                        ventaMayor = montoVenta;
+                    }
+
+                    System.out.printf("-> Venta de '%s' registrada con éxito. Total: $%.2f%n", nombreProducto, montoVenta);
+                    break;
+
+                case 2:
+                    System.out.println("\n==========================================");
+                    System.out.println("       ESTADÍSTICAS DE VENTAS");
+                    System.out.println("==========================================");
+
+                    if (totalVentas == 0) {
+                        System.out.println("No se han registrado ventas en el sistema aún.");
+                    } else {
+                        double promedioVenta = totalRecaudado / totalVentas;
+                        System.out.println("Número de ventas realizadas: " + totalVentas);
+                        System.out.println("Total de unidades vendidas:  " + totalUnidades);
+                        System.out.printf("Total recaudado:            $%.2f%n", totalRecaudado);
+                        System.out.printf("Venta mayor:                $%.2f%n", ventaMayor);
+                        System.out.printf("Promedio por venta:         $%.2f%n", promedioVenta);
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("\nGracias por utilizar el sistema. ¡Hasta pronto!");
+                    break;
+
+                default:
+                    System.out.println("Opción inválida. Seleccione una opción válida (1, 2 o 3).");
+                    break;
+            }
+
+        } while (opcion != 3);
+
+        scanner.close();
+    }
+}
