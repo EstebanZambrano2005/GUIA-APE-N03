@@ -12,10 +12,10 @@ Desarrollar soluciones algorítmicas utilizando estructuras repetitivas for, whi
 2. Metodología obligatoria para cada ejercicio.
 Cada ejercicio deberá presentar la siguiente secuencia de trabajo: Problema → Análisis → Entradas/Procesos/Salidas → Algoritmo → Pseudocódigo → Diagrama de flujo → Código Java → Prueba de escritorio → Evidencia de ejecución.
 
-Equipo e Integrantes
-
-Esteban Zambrano
-Kevin Garcés 
-Alex Cabrera 
-Cristian Gomez 
-Erick Cordonez 
+| Nombre | Rol | Usuario GitHub | Tarea |
+|--------|-----|-----------------|-------|
+| Kevin Garcés | Analista | @Javi2145 | Análisis del problema |
+| Cristian Gómez | Programador | @Cristian-GT2006 | Diseño del algoritmo |
+| Erick Cordonez | Diseñador | @Erick-100 | Diseño de diagrama de flujo |
+| Esteban Zambrano | Desarrollador | @EstebanZambrano2005| Diseño de Pseudocódigo |
+| Alex Cabrera | Desarrollador | @Alex2840 | Codificación |
