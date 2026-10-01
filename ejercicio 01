@@ -1,0 +1,201 @@
+Ejercicio 01: Promedio de calificaciones
+
+1. PROBLEMA
+Desarrolle un programa que solicite la cantidad N de estudiantes y luego registre sus calificaciones, válidas entre 0 y 10. El sistema debe mostrar el promedio general, la calificación mayor, la menor, el número de aprobados y el número de reprobados.
+
+Estructura sugerida: for. Conceptos: Contador, acumulador, validación, mayor y menor.
+
+---
+
+2. ANÁLISIS
+- Estructura de Control Principal:** Se utiliza un ciclo `for` para iterar exactamente `N` veces (un ciclo por cada estudiante).
+- Validación de Entradas:**
+  - La cantidad de estudiantes `N` debe ser un entero estrictamente mayor a 0 ($N > 0$).
+  - Cada calificación debe ser un valor numérico real en el rango cerrado $[0, 10]$. Si el usuario ingresa un valor fuera de este rango, se solicitará de nuevo hasta que sea válido.
+- Acumuladores y Contadores:**
+  - `sumaNotas`: Acumulador para sumar las notas de todos los estudiantes.
+  - `aprobados`: Contador de estudiantes con nota $\ge 7.0$ (o la nota mínima de aprobación).
+  - `reprobados`: Contador de estudiantes con nota $< 7.0$.
+  - `notaMayor` y `notaMenor`: Variables para almacenar la calificación máxima y mínima registrada.
+
+---
+3. ENTRADAS / PROCESOS / SALIDAS
+- Entradas:
+  - `N` (entero): Número total de estudiantes.
+  - `nota` (real): Calificación de cada estudiante (rango $0 - 10$).
+- Procesos:
+  1. Leer y validar `N > 0`.
+  2. Mediante un ciclo `for` de $1$ a $N$:
+     - Solicitar y validar que `nota` esté entre $0.0$ y $10.0$.
+     - Sumar `nota` a `sumaNotas`.
+     - Evaluar aprobación: si `nota >= 7.0` incrementar `aprobados`, sino incrementar `reprobados`.
+     - Actualizar `notaMayor` y `notaMenor`.
+  3. Calcular `promedio = sumaNotas / N`.
+- Salidas: Promedio general del curso, nota mayor, nota menor, total de aprobados y total de reprobados.
+
+4. ALGORITMO
+1. Inicio.
+2. Leer y validar `N` (debe ser mayor a 0).
+3. Inicializar `sumaNotas = 0.0`, `aprobados = 0`, `reprobados = 0`.
+4. Para `i` desde 1 hasta `N` hacer:
+   1. Leer y validar `nota` (debe estar entre 0.0 y 10.0).
+   2. `sumaNotas = sumaNotas + nota`.
+   3. Si `i == 1` Entonces:
+      - `notaMayor = nota`
+      - `notaMenor = nota`
+      Sino:
+      - Si `nota > notaMayor` Entonces `notaMayor = nota`
+      - Si `nota < notaMenor` Entonces `notaMenor = nota`
+   4. Si `nota >= 7.0` Entonces `aprobados = aprobados + 1` Sino `reprobados = reprobados + 1`.
+5. `promedio = sumaNotas / N`.
+6. Mostrar `promedio`, `notaMayor`, `notaMenor`, `aprobados` y `reprobados`.
+7. Fin.
+
+---
+
+5. PSEUDOCÓDIGO
+```text
+Algoritmo PromedioCalificaciones
+    Definir N, i, aprobados, reprobados Como Entero
+    Definir nota, sumaNotas, promedio, notaMayor, notaMenor Como Real
+    
+    Repetir
+        Escribir "Ingrese la cantidad de estudiantes (N > 0):"
+        Leer N
+        Si N <= 0 Entonces
+            Escribir "Error: La cantidad de estudiantes debe ser mayor a 0."
+        FinSi
+    Hasta Que N > 0
+    
+    sumaNotas <- 0.0
+    aprobados <- 0
+    reprobados <- 0
+    
+    Para i <- 1 Hasta N Con Paso 1 Hacer
+        Escribir "Estudiante ", i, ":"
+        Repetir
+            Escribir "Ingrese la calificación (0 - 10):"
+            Leer nota
+            Si nota < 0 O nota > 10 Entonces
+                Escribir "Error: La calificación debe estar entre 0 y 10."
+            FinSi
+        Hasta Que nota >= 0 Y nota <= 10
+        
+        sumaNotas <- sumaNotas + nota
+        
+        Si i = 1 Entonces
+            notaMayor <- nota
+            notaMenor <- nota
+        Sino
+            Si nota > notaMayor Entonces
+                notaMayor <- nota
+            FinSi
+            Si nota < notaMenor Entonces
+                notaMenor <- nota
+            FinSi
+        FinSi
+        
+        Si nota >= 7.0 Entonces
+            aprobados <- aprobados + 1
+        Sino
+            reprobados <- reprobados + 1
+        FinSi
+    FinPara
+    
+    promedio <- sumaNotas / N
+    
+    Escribir "=========================================="
+    Escribir "          RESUMEN DE RESULTADOS"
+    Escribir "=========================================="
+    Escribir "Promedio general:  ", promedio
+    Escribir "Calificación mayor:", notaMayor
+    Escribir "Calificación menor:", notaMenor
+    Escribir "Aprobados:         ", aprobados
+    Escribir "Reprobados:        ", reprobados
+FinAlgoritmo
+
+public class Ejercicio01 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = 0;
+        
+        // Validación de N (cantidad de estudiantes)
+        do {
+            System.out.print("Ingrese la cantidad de estudiantes (N > 0): ");
+            if (scanner.hasNextInt()) {
+                N = scanner.nextInt();
+                if (N <= 0) {
+                    System.out.println("Error: La cantidad de estudiantes debe ser mayor a 0.");
+                }
+            } else {
+                System.out.println("Error: Debe ingresar un número entero.");
+                scanner.next();
+            }
+        } while (N <= 0);
+
+        double sumaNotas = 0.0;
+        double notaMayor = 0.0;
+        double notaMenor = 0.0;
+        int aprobados = 0;
+        int reprobados = 0;
+
+        // Registro de calificaciones con ciclo for
+        for (int i = 1; i <= N; i++) {
+            double nota = -1.0;
+            
+            // Validación de la calificación (0 a 10)
+            do {
+                System.out.printf("Ingrese la calificación del estudiante %d (0 - 10): ", i);
+                if (scanner.hasNextDouble()) {
+                    nota = scanner.nextDouble();
+                    if (nota < 0.0 || nota > 10.0) {
+                        System.out.println("Error: La calificación debe estar entre 0.0 y 10.0.");
+                    }
+                } else {
+                    System.out.println("Error: Debe ingresar un valor numérico.");
+                    scanner.next();
+                }
+            } while (nota < 0.0 || nota > 10.0);
+
+            // Acumulación de notas
+            sumaNotas += nota;
+
+            // Determinación de nota mayor y menor
+            if (i == 1) {
+                notaMayor = nota;
+                notaMenor = nota;
+            } else {
+                if (nota > notaMayor) {
+                    notaMayor = nota;
+                }
+                if (nota < notaMenor) {
+                    notaMenor = nota;
+                }
+            }
+
+            // Conteo de aprobados y reprobados
+            if (nota >= 7.0) {
+                aprobados++;
+            } else {
+                reprobados++;
+            }
+        }
+
+        // Cálculo del promedio general
+        double promedio = sumaNotas / N;
+
+        // Salida de resultados
+        System.out.println("\n==========================================");
+        System.out.println("          RESUMEN DE RESULTADOS");
+        System.out.println("==========================================");
+        System.out.printf("Promedio general:   %.2f%n", promedio);
+        System.out.printf("Calificación mayor: %.2f%n", notaMayor);
+        System.out.printf("Calificación menor: %.2f%n", notaMenor);
+        System.out.println("Aprobados:          " + aprobados);
+        System.out.println("Reprobados:         " + reprobados);
+
+        scanner.close();
+    }
+}
