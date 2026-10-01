@@ -1,0 +1,20 @@
+Ejercicio 4: Tabla de multiplicar validada
+
+Análisis
+
+Entrada: num (entero).
+Proceso: repetir la lectura mientras num esté fuera de [1, 12]. Luego, con un Para de 1 a 12, calcular num * i.
+Salida: las 12 líneas de la tabla.
+
+Pseudocódigo:
+Algoritmo TablaMultiplicar
+    Definir num, i Como Entero
+    num <- 0
+    Mientras num < 1 O num > 12 Hacer
+        Escribir "Ingrese número (1-12): "
+        Leer num
+    FinMientras
+    Para i <- 1 Hasta 12 Con Paso 1 Hacer
+        Escribir num, " x ", i, " = ", num * i
+    FinPara
+FinAlgoritmo
