@@ -1,0 +1,142 @@
+8. Estacionamiento universitario
+Registre varios vehículos indicando tipo, número de horas y tarifa correspondiente. Calcule el valor individual y la recaudación total. El proceso finalizará al ingresar una opción centinela definida por el equipo.
+Estructura sugerida: while. Conceptos: Centinela, acumuladores, validaciones y selección.
+Análisis
+No se sabe cuántos vehículos se registrarán, y puede que ninguno, así que se usa while. La condición se evalúa antes de entrar al ciclo.
+El centinela es la opción 0 en el menú de tipo de vehículo. Se lee una vez antes del ciclo (lectura inicial) y otra al final de cada vuelta.
+Las tarifas por hora son un supuesto del ejercicio, que el equipo puede cambiar: Automóvil $1.50, Motocicleta $0.75 y Bicicleta $0.25.
+Se usa selección (switch) para asignar tipo y tarifa.
+Se usan validaciones: la opción debe estar entre 1 y 3, y las horas deben ser mayores que 0.
+Se usan tres variables: contadorVehiculos (contador), totalHoras (acumulador) y totalRecaudado (acumulador).
+Entradas / Procesos / Salidas
+Entradas:
+Opción de tipo de vehículo (1-3, o 0 para salir)
+Número de horas
+Procesos:
+Comparar la opción con el centinela (0)
+Asignar tipo y tarifa (switch)
+Validar horas > 0
+valor = horas × tarifa
+totalRecaudado += valor
+totalHoras += horas	
+contadorVehiculos++
+Salidas:
+Tipo, tarifa y valor a pagar de cada vehículo
+Mensajes de error
+Cantidad de vehículos atendidos
+Total de horas
+Recaudación total
+Algoritmo
+Iniciar contadorVehiculos = 0, totalHoras = 0 y totalRecaudado = 0.
+Mostrar el menú y leer opcion.
+Mientras opcion sea distinta de 0, repetir los pasos 4 a 9.
+Asignar tipo y tarifa según la opción. Si no es 1, 2 o 3, mostrar error e ir al paso 9.
+Leer las horas.
+Si las horas son menores o iguales a 0, mostrar error e ir al paso 9.
+Calcular valor = horas × tarifa.
+Sumar el valor a totalRecaudado, las horas a totalHoras y 1 a contadorVehiculos, y mostrar el valor a pagar.
+Mostrar el menú de nuevo y leer opcion.
+Al ingresar 0, mostrar el resumen final y terminar.
+Pseudocódigo
+INICIO
+  contadorVehiculos ← 0
+  totalHoras        ← 0
+  totalRecaudado    ← 0
+
+  ESCRIBIR "1. Automóvil  2. Motocicleta  3. Bicicleta  0. Salir"
+  LEER opcion
+
+  MIENTRAS opcion ≠ 0 HACER
+    SEGÚN opcion HACER
+      1: tipo ← "Automóvil",   tarifa ← 1.50
+      2: tipo ← "Motocicleta", tarifa ← 0.75
+      3: tipo ← "Bicicleta",   tarifa ← 0.25
+      OTRO: tarifa ← 0
+    FIN SEGÚN
+
+    SI tarifa > 0 ENTONCES
+      LEER horas
+      SI horas > 0 ENTONCES
+        valor          ← horas * tarifa
+        totalRecaudado ← totalRecaudado + valor
+        totalHoras     ← totalHoras + horas
+        contadorVehiculos ← contadorVehiculos + 1
+        ESCRIBIR tipo, tarifa, valor
+      SINO
+        ESCRIBIR "Las horas deben ser mayores a 0"
+      FIN SI
+    SINO
+      ESCRIBIR "Opción no válida"
+    FIN SI
+
+    ESCRIBIR "1. Automóvil  2. Motocicleta  3. Bicicleta  0. Salir"
+    LEER opcion
+  FIN MIENTRAS
+
+  ESCRIBIR contadorVehiculos, totalHoras, totalRecaudado
+FIN
+Código Java
+java
+import java.util.Scanner;
+
+public class EstacionamientoUniversitario {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int contadorVehiculos = 0;     // contador
+        double totalHoras = 0;         // acumulador de horas
+        double totalRecaudado = 0;     // acumulador de dinero
+        final int CENTINELA = 0;
+
+        System.out.println("=== Estacionamiento Universitario ===");
+        System.out.println("1. Automóvil ($1.50/h)");
+        System.out.println("2. Motocicleta ($0.75/h)");
+        System.out.println("3. Bicicleta ($0.25/h)");
+        System.out.println("0. Salir");
+        System.out.print("Seleccione el tipo de vehículo: ");
+        int opcion = sc.nextInt();
+
+        while (opcion != CENTINELA) {
+            String tipo = "";
+            double tarifa;
+
+            switch (opcion) {
+                case 1:  tipo = "Automóvil";   tarifa = 1.50; break;
+                case 2:  tipo = "Motocicleta"; tarifa = 0.75; break;
+                case 3:  tipo = "Bicicleta";   tarifa = 0.25; break;
+                default: tarifa = 0;
+            }
+
+            if (tarifa > 0) {
+                System.out.print("Número de horas: ");
+                double horas = sc.nextDouble();
+
+                if (horas > 0) {
+                    double valor = horas * tarifa;
+                    totalRecaudado += valor;
+                    totalHoras += horas;
+                    contadorVehiculos++;
+
+                    System.out.println("Tipo: " + tipo);
+                    System.out.printf("Tarifa por hora: $%.2f%n", tarifa);
+                    System.out.printf("Valor a pagar: $%.2f%n", valor);
+                } else {
+                    System.out.println("Error: las horas deben ser mayores a 0.");
+                }
+            } else {
+                System.out.println("Error: opción no válida.");
+            }
+
+            System.out.println("\n1. Automóvil  2. Motocicleta  3. Bicicleta  0. Salir");
+            System.out.print("Seleccione el tipo de vehículo: ");
+            opcion = sc.nextInt();
+        }
+
+        System.out.println("\n=== RESUMEN FINAL ===");
+        System.out.println("Vehículos atendidos: " + contadorVehiculos);
+        System.out.printf("Total de horas: %.1f%n", totalHoras);
+        System.out.printf("Recaudación total: $%.2f%n", totalRecaudado);
+
+        sc.close();
+    }
+}
