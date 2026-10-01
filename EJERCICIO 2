@@ -1,0 +1,203 @@
+Ejercicio 02: Control de edades con centinela
+
+1. PROBLEMA
+Ingrese edades válidas de personas. El ingreso terminará cuando se escriba -1. El programa deberá determinar cuántos son menores de edad, adultos y mayores de 65 años, además del promedio de edades ingresadas.
+
+Estructura sugerida: while. Conceptos: Centinela, contadores, acumulador y validación.
+
+---
+
+2. ANÁLISIS
+- Estructura de Control Principal:** Se utiliza un ciclo `while` controlado por un valor centinela (`edad != -1`).
+- Valor Centinela:** `-1` (indica la finalización del ingreso de datos y no forma parte del cálculo estadístico).
+- Validación de Entradas:**
+  - Una edad válida para el procesamiento debe ser mayor o igual a 0 (`edad >= 0`).
+  - Si el usuario ingresa un valor negativo distinto de `-1` (por ejemplo, `-5`), se debe mostrar un mensaje de error y solicitar de nuevo la edad sin contabilizarla.
+- Clasificación de Categorías:**
+  - **Menores de edad:** `edad < 18`.
+  - **Adultos:** `edad >= 18` y `edad <= 65`.
+  - **Mayores de 65 años:** `edad > 65`.
+- Acumuladores y Contadores:**
+  - `totalPersonas`: Contador de registros válidos.
+  - `sumaEdades`: Acumulador de la suma total de las edades.
+  - `menores`, `adultos`, `mayores65`: Contadores para cada rango de edad.
+
+---
+
+3. ENTRADAS / PROCESOS / SALIDAS
+- Entradas:
+  - `edad` (entero): Edad ingresada por el usuario (valor centinela: `-1`).
+- **Procesos:**
+  1. Solicitar la primera `edad`.
+  2. Mientras `edad != -1`:
+     - Validar que `edad >= 0`. Si es negativa (y diferente de `-1`), solicitar nuevamente.
+     - Incrementar `totalPersonas` y sumar a `sumaEdades`.
+     - Clasificar e incrementar el contador correspondiente:
+       - Si `edad < 18` -> `menores++`.
+       - Si `edad <= 65` -> `adultos++`.
+       - Sino -> `mayores65++`.
+     - Solicitar la siguiente `edad`.
+  3. Si `totalPersonas > 0`, calcular `promedio = sumaEdades / totalPersonas`.
+- Salidas: Cantidad de menores de edad, adultos, mayores de 65 años y promedio de edad general.
+
+4. ALGORITMO
+1. Inicio.
+2. Inicializar `totalPersonas = 0`, `sumaEdades = 0`, `menores = 0`, `adultos = 0`, `mayores65 = 0`.
+3. Leer `edad`.
+4. Mientras `edad != -1` hacer:
+   1. Si `edad < 0` Entonces:
+      - Mostrar "Error: Edad inválida".
+   2. Sino:
+      - `totalPersonas = totalPersonas + 1`.
+      - `sumaEdades = sumaEdades + edad`.
+      - Si `edad < 18` Entonces `menores = menores + 1`.
+      - Sino Si `edad <= 65` Entonces `adultos = adultos + 1`.
+      - Sino `mayores65 = mayores65 + 1`.
+   3. Leer `edad`.
+5. Si `totalPersonas > 0` Entonces:
+   - `promedio = sumaEdades / totalPersonas`.
+   - Mostrar `menores`, `adultos`, `mayores65` y `promedio`.
+   Sino:
+   - Mostrar "No se ingresaron edades válidas."
+6. Fin.
+
+---
+
+5. PSEUDOCÓDIGO
+```text
+Algoritmo ControlEdadesCentinela
+    Definir edad, totalPersonas, menores, adultos, mayores65 Como Entero
+    Definir sumaEdades, promedio Como Real
+    
+    totalPersonas <- 0
+    sumaEdades <- 0
+    menores <- 0
+    adultos <- 0
+    mayores65 <- 0
+    
+    Escribir "Ingrese una edad (-1 para finalizar):"
+    Leer edad
+    
+    Mientras edad <> -1 Hacer
+        Si edad < 0 Entonces
+            Escribir "Error: La edad no puede ser negativa."
+        Sino
+            totalPersonas <- totalPersonas + 1
+            sumaEdades <- sumaEdades + edad
+            
+            Si edad < 18 Entonces
+                menores <- menores + 1
+            Sino
+                Si edad <= 65 Entonces
+                    adultos <- adultos + 1
+                Sino
+                    mayores65 <- mayores65 + 1
+                FinSi
+            FinSi
+        FinSi
+        
+        Escribir "Ingrese otra edad (-1 para finalizar):"
+        Leer edad
+    FinMientras
+    
+    Si totalPersonas > 0 Entonces
+        promedio <- sumaEdades / totalPersonas
+        Escribir "=========================================="
+        Escribir "          ESTADÍSTICAS DE EDADES"
+        Escribir "=========================================="
+        Escribir "Total de personas registradas: ", totalPersonas
+        Escribir "Menores de edad (< 18):       ", menores
+        Escribir "Adultos (18 - 65):             ", adultos
+        Escribir "Mayores de 65 años (> 65):     ", mayores65
+        Escribir "Promedio de edad:             ", promedio
+    Sino
+        Escribir "No se ingresaron datos para procesar."
+    FinSi
+FinAlgoritmo
+
+
+
+import java.util.Scanner;
+
+public class Ejercicio02 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int totalPersonas = 0;
+        double sumaEdades = 0.0;
+        int menores = 0;
+        int adultos = 0;
+        int mayores65 = 0;
+
+        System.out.println("==========================================");
+        System.out.println("      CONTROL DE EDADES CON CENTINELA");
+        System.out.println("==========================================");
+        System.out.println("Ingrese las edades de las personas.");
+        System.out.println("Para finalizar el ingreso, escriba -1.\n");
+
+        int edad = 0;
+        boolean entradaValida = false;
+
+        // Lectura inicial (primera edad)
+        do {
+            System.out.print("Ingrese una edad (-1 para salir): ");
+            if (scanner.hasNextInt()) {
+                edad = scanner.nextInt();
+                entradaValida = true;
+            } else {
+                System.out.println("Error: Ingrese un número entero válido.");
+                scanner.next();
+            }
+        } while (!entradaValida);
+
+        // Ciclo while controlado por centinela -1
+        while (edad != -1) {
+            if (edad < 0) {
+                System.out.println("-> Error: La edad no puede ser negativa. Intente de nuevo.");
+            } else {
+                totalPersonas++;
+                sumaEdades += edad;
+
+                if (edad < 18) {
+                    menores++;
+                } else if (edad <= 65) {
+                    adultos++;
+                } else {
+                    mayores65++;
+                }
+            }
+
+            // Lectura de la siguiente edad
+            entradaValida = false;
+            do {
+                System.out.print("Ingrese otra edad (-1 para salir): ");
+                if (scanner.hasNextInt()) {
+                    edad = scanner.nextInt();
+                    entradaValida = true;
+                } else {
+                    System.out.println("Error: Ingrese un número entero válido.");
+                    scanner.next();
+                }
+            } while (!entradaValida);
+        }
+
+        // Muestra de resultados
+        System.out.println("\n==========================================");
+        System.out.println("          ESTADÍSTICAS OBTENIDAS");
+        System.out.println("==========================================");
+
+        if (totalPersonas > 0) {
+            double promedio = sumaEdades / totalPersonas;
+            System.out.println("Total de personas registradas: " + totalPersonas);
+            System.out.println("Menores de edad (< 18):       " + menores);
+            System.out.println("Adultos (18 a 65):             " + adultos);
+            System.out.println("Mayores de 65 años (> 65):     " + mayores65);
+            System.out.printf("Promedio de edad:             %.2f años%n", promedio);
+        } else {
+            System.out.println("No se ingresó ninguna edad válida para procesar.");
+        }
+
+        scanner.close();
+    }
+}
