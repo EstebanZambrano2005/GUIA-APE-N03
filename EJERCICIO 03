@@ -1,0 +1,119 @@
+Ejercicio 03: Calculadora con menú repetitivo
+
+1. PROBLEMA
+Construya un menú con las opciones: 1) Sumar, 2) Restar, 3) Multiplicar, 4) Dividir y 5) Salir. El menú debe repetirse hasta seleccionar Salir. Controle la división para evitar dividir entre cero.
+
+Estructura sugerida: do-while + switch. Conceptos: Menú, repetición, selección y validación.
+
+---
+2. ANÁLISIS
+- Estructura de Control Principal:** Se utiliza un ciclo `do-while` para desplegar el menú repetidamente hasta que el usuario elija la opción 5 (Salir).
+- Estructura Seleccionadora:** Se implementa una estructura `switch` para ejecutar la operación matemática seleccionada según la opción ingresada (1 a 5).
+- Validación de Entradas:**
+  - La opción del menú debe estar dentro del rango numérico de 1 a 5.
+  - En la operación de **División (opción 4)**, el divisor ($num2$) debe ser estrictamente diferente de cero ($num2 \neq 0$) para evitar errores en tiempo de ejecución por división para cero.
+- Operaciones Aritméticas:**
+  - Suma: $resultado = num1 + num2$
+  - Resta: $resultado = num1 - num2$
+  - Multiplicación: $resultado = num1 \times num2$
+  - División: $resultado = num1 / num2$
+
+---
+
+3. ENTRADAS / PROCESOS / SALIDAS
+- Entradas:
+  - `opcion` (entero): Opción del menú (1 a 5).
+  - `num1` (real): Primer número para la operación.
+  - `num2` (real): Segundo número para la operación.
+- Procesos:
+  1. Mostrar el menú interactivo con las 5 opciones.
+  2. Leer `opcion`.
+  3. Si `opcion` está entre 1 y 4:
+     - Solicitar `num1` y `num2`.
+     - Si `opcion == 4` y `num2 == 0`, mostrar mensaje de error y solicitar un divisor diferente de cero.
+     - Calcular el resultado de la operación correspondiente.
+  4. Si `opcion == 5`, finalizar el ciclo.
+- Salidas:** Resultado de la operación matemática seleccionada o mensaje de despido/error.
+
+4. ALGORITMO
+1. Inicio.
+2. Repetir:
+   1. Mostrar menú con las opciones (1. Sumar, 2. Restar, 3. Multiplicar, 4. Dividir, 5. Salir).
+   2. Leer `opcion`.
+   3. Según sea `opcion`:
+      - **Caso 1 (Suma):** Leer `num1`, `num2`. `resultado = num1 + num2`. Mostrar `resultado`.
+      - **Caso 2 (Resta):** Leer `num1`, `num2`. `resultado = num1 - num2`. Mostrar `resultado`.
+      - **Caso 3 (Multiplicación):** Leer `num1`, `num2`. `resultado = num1 * num2`. Mostrar `resultado`.
+      - **Caso 4 (División):** 
+        - Leer `num1`.
+        - Leer y validar `num2 != 0`.
+        - `resultado = num1 / num2`. Mostrar `resultado`.
+      - **Caso 5 (Salir):** Mostrar "Saliendo de la calculadora...".
+      - **De Otro Modo:** Mostrar "Opción no válida. Intente de nuevo."
+3. Hasta que `opcion == 5`.
+4. Fin.
+
+---
+
+5. PSEUDOCÓDIGO
+```text
+Algoritmo CalculadoraMenuRepetitivo
+    Definir opcion Como Entero
+    Definir num1, num2, resultado Como Real
+    
+    Repetir
+        Escribir "=========================================="
+        Escribir "       CALCULADORA INTERACTIVA"
+        Escribir "=========================================="
+        Escribir "1) Sumar"
+        Escribir "2) Restar"
+        Escribir "3) Multiplicar"
+        Escribir "4) Dividir"
+        Escribir "5) Salir"
+        Escribir "Seleccione una opción (1-5):"
+        Leer opcion
+        
+        Segun opcion Hacer
+            1:
+                Escribir "Ingrese el primer número:"
+                Leer num1
+                Escribir "Ingrese el segundo número:"
+                Leer num2
+                resultado <- num1 + num2
+                Escribir "Resultado de la suma: ", resultado
+            2:
+                Escribir "Ingrese el primer número:"
+                Leer num1
+                Escribir "Ingrese el segundo número:"
+                Leer num2
+                resultado <- num1 - num2
+                Escribir "Resultado de la resta: ", resultado
+            3:
+                Escribir "Ingrese el primer número:"
+                Leer num1
+                Escribir "Ingrese el segundo número:"
+                Leer num2
+                resultado <- num1 * num2
+                Escribir "Resultado de la multiplicación: ", resultado
+            4:
+                Escribir "Ingrese el dividendo:"
+                Leer num1
+                Repetir
+                    Escribir "Ingrese el divisor (diferente de 0):"
+                    Leer num2
+                    Si num2 = 0 Entonces
+                        Escribir "Error: No se puede dividir entre cero."
+                    FinSi
+                Hasta Que num2 <> 0
+                resultado <- num1 / num2
+                Escribir "Resultado de la división: ", resultado
+            5:
+                Escribir "Gracias por usar la calculadora. ¡Hasta luego!"
+            De Otro Modo:
+                Escribir "Opción no válida. Ingrese un valor entre 1 y 5."
+        FinSegun
+        
+    Hasta Que opcion = 5
+FinAlgoritmo
+
+
