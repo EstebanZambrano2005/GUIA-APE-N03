@@ -1,0 +1,53 @@
+Ejercicio 5: Cajero universitario
+
+Análisis
+
+Entradas: op (opción del menú) y monto.
+Proceso:
+Saldo inicial de 500.
+Depositar solo si monto > 0.
+Retirar solo si monto > 0 y monto <= saldo.
+Cada operación válida incrementa tx.
+El ciclo termina con op = 5.
+Salidas: saldo, número de transacciones y mensajes de error.
+
+Pseudocódigo:
+Algoritmo CajeroUniversitario
+    Definir saldo, monto Como Real
+    Definir op, tx Como Entero
+    saldo <- 500
+    tx <- 0
+    Repetir
+        Escribir "1.Saldo 2.Depositar 3.Retirar 4.NumTx 5.Salir"
+        Leer op
+        Segun op Hacer
+            1:
+                Escribir "Saldo: ", saldo
+                tx <- tx + 1
+            2:
+                Escribir "Monto a depositar: "
+                Leer monto
+                Si monto > 0 Entonces
+                    saldo <- saldo + monto
+                    tx <- tx + 1
+                SiNo
+                    Escribir "Monto inválido"
+                FinSi
+            3:
+                Escribir "Monto a retirar: "
+                Leer monto
+                Si monto > 0 Y monto <= saldo Entonces
+                    saldo <- saldo - monto
+                    tx <- tx + 1
+                SiNo
+                    Escribir "Monto inválido o fondos insuficientes"
+                FinSi
+            4:
+                Escribir "Transacciones: ", tx
+            5:
+                Escribir "Gracias por usar el cajero"
+            De Otro Modo:
+                Escribir "Opción inválida"
+        FinSegun
+    Hasta Que op = 5
+FinAlgoritmo
