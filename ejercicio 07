@@ -1,0 +1,138 @@
+7. Venta de entradas CineCampus
+Registre de manera repetitiva ventas de entradas. Para cada venta solicite tipo de entrada, cantidad y precio. Calcule subtotal por venta y total acumulado. Después de cada registro pregunte si desea realizar otra venta.
+Estructura sugerida: do-while. Conceptos: Acumulador, contador, selección y repetición.
+Análisis
+La cantidad de ventas no se conoce de antemano, así que se usa una repetición que se ejecute al menos una vez: do-while.
+Se necesitan dos acumuladores (totalAcumulado y totalEntradas) y un contador (contadorVentas), todos iniciados en 0 antes del ciclo.
+Se usa selección (switch y if) para elegir el tipo de entrada y validar que cantidad y precio sean mayores que 0.
+El ciclo termina cuando el usuario responde algo distinto de "S".
+Entradas: 
+Opción de tipo de entrada (1-3)
+Cantidad de entradas
+Precio unitario
+Respuesta "¿otra venta? (S/N)"
+Procesos:
+Convertir la opción en nombre del tipo (switch)
+Validar cantidad > 0 y precio > 0
+subtotal = cantidad × precio
+totalAcumulado += subtotal
+totalEntradas += cantidad
+contadorVentas++
+Salidas: 
+Subtotal de cada venta
+Mensajes de error
+Número de ventas
+Total de entradas vendidas
+Algoritmo
+Iniciar contadorVentas = 0, totalEntradas = 0 y totalAcumulado = 0.
+Mostrar el menú de tipos de entrada y leer la opción.
+Asignar el nombre del tipo según la opción. Si no es válida, mostrar error e ir al paso 8.
+Leer cantidad y precio.
+Si cantidad > 0 y precio > 0, calcular subtotal = cantidad × precio. Si no, mostrar error e ir al paso 8.
+Sumar el subtotal a totalAcumulado, la cantidad a totalEntradas y 1 a contadorVentas.
+Mostrar el subtotal de la venta y el total acumulado.
+Preguntar "¿Desea realizar otra venta? (S/N)".
+Si la respuesta es S, volver al paso 2.
+Mostrar el resumen final (ventas, entradas y total) y terminar.
+Pseudocódigo
+INICIO
+  contadorVentas ← 0
+  totalEntradas  ← 0
+  totalAcumulado ← 0
+
+  HACER
+    ESCRIBIR "1. General  2. VIP  3. Estudiante"
+    LEER opcion
+
+    SEGÚN opcion HACER
+      1: tipo ← "General"
+      2: tipo ← "VIP"
+      3: tipo ← "Estudiante"
+      OTRO: tipo ← "INVALIDO"
+    FIN SEGÚN
+
+    SI tipo ≠ "INVALIDO" ENTONCES
+      LEER cantidad, precio
+      SI cantidad > 0 Y precio > 0 ENTONCES
+        subtotal       ← cantidad * precio
+        totalAcumulado ← totalAcumulado + subtotal
+        totalEntradas  ← totalEntradas + cantidad
+        contadorVentas ← contadorVentas + 1
+        ESCRIBIR tipo, subtotal, totalAcumulado
+      SINO
+        ESCRIBIR "Cantidad y precio deben ser mayores a 0"
+      FIN SI
+    SINO
+      ESCRIBIR "Tipo de entrada no válido"
+    FIN SI
+
+    ESCRIBIR "¿Desea realizar otra venta? (S/N)"
+    LEER otra
+  MIENTRAS otra = "S" O otra = "s"
+
+  ESCRIBIR contadorVentas, totalEntradas, totalAcumulado
+FIN
+Código Java
+java
+import java.util.Scanner;
+
+public class CineCampus {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int contadorVentas = 0;      // contador
+        int totalEntradas = 0;       // acumulador de entradas
+        double totalAcumulado = 0;   // acumulador de dinero
+        String otra;
+
+        do {
+            System.out.println("\n=== CineCampus ===");
+            System.out.println("1. General");
+            System.out.println("2. VIP");
+            System.out.println("3. Estudiante");
+            System.out.print("Seleccione el tipo de entrada: ");
+            int opcion = sc.nextInt();
+
+            String tipo;
+            switch (opcion) {
+                case 1:  tipo = "General";    break;
+                case 2:  tipo = "VIP";        break;
+                case 3:  tipo = "Estudiante"; break;
+                default: tipo = "INVALIDO";
+            }
+
+            if (!tipo.equals("INVALIDO")) {
+                System.out.print("Cantidad de entradas: ");
+                int cantidad = sc.nextInt();
+                System.out.print("Precio unitario: $");
+                double precio = sc.nextDouble();
+
+                if (cantidad > 0 && precio > 0) {
+                    double subtotal = cantidad * precio;
+                    totalAcumulado += subtotal;
+                    totalEntradas += cantidad;
+                    contadorVentas++;
+
+                    System.out.println("Tipo: " + tipo);
+                    System.out.printf("Subtotal de la venta: $%.2f%n", subtotal);
+                    System.out.printf("Total acumulado: $%.2f%n", totalAcumulado);
+                } else {
+                    System.out.println("Error: cantidad y precio deben ser mayores a 0.");
+                }
+            } else {
+                System.out.println("Error: tipo de entrada no válido.");
+            }
+
+            System.out.print("¿Desea realizar otra venta? (S/N): ");
+            otra = sc.next();
+
+        } while (otra.equalsIgnoreCase("S"));
+
+        System.out.println("\n=== RESUMEN FINAL ===");
+        System.out.println("Ventas registradas: " + contadorVentas);
+        System.out.println("Entradas vendidas: " + totalEntradas);
+        System.out.printf("Total recaudado: $%.2f%n", totalAcumulado);
+
+        sc.close();
+    }
+}
