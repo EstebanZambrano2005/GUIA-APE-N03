@@ -51,3 +51,64 @@ Algoritmo CajeroUniversitario
         FinSegun
     Hasta Que op = 5
 FinAlgoritmo
+
+Código JAVA
+import java.util.Scanner;
+ 
+public class Ejercicio5 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double saldo = 500;
+        double monto;
+        int op = 0;
+        int tx = 0;
+ 
+        do {
+            System.out.println("1.Saldo 2.Depositar 3.Retirar 4.NumTx 5.Salir");
+            if (sc.hasNextInt()) {
+                op = sc.nextInt();
+            } else {
+                sc.next(); // descarta la entrada no válida
+                op = 0;
+            }
+ 
+            switch (op) {
+                case 1:
+                    System.out.println("Saldo: " + saldo);
+                    tx++;
+                    break;
+                case 2:
+                    System.out.print("Monto a depositar: ");
+                    monto = sc.nextDouble();
+                    if (monto > 0) {
+                        saldo = saldo + monto;
+                        tx++;
+                    } else {
+                        System.out.println("Monto inválido");
+                    }
+                    break;
+                case 3:
+                    System.out.print("Monto a retirar: ");
+                    monto = sc.nextDouble();
+                    if (monto > 0 && monto <= saldo) {
+                        saldo = saldo - monto;
+                        tx++;
+                    } else {
+                        System.out.println("Monto inválido o fondos insuficientes");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Transacciones: " + tx);
+                    break;
+                case 5:
+                    System.out.println("Gracias por usar el cajero");
+                    break;
+                default:
+                    System.out.println("Opción inválida");
+            }
+        } while (op != 5);
+ 
+        sc.close();
+    }
+}
+ 
