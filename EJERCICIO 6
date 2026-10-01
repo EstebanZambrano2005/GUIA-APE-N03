@@ -1,0 +1,52 @@
+Ejercicio 6: Estadísticas de un curso
+
+Análisis
+
+Entradas: n y las notas.
+Proceso:
+Un Para recorre a los N estudiantes.
+Un Repetir...Hasta Que interno valida que la nota esté en [0, 10].
+Se acumula la suma y se buscan el mayor y el menor.
+Se cuentan aprobados (nota >= 7) y reprobados.
+Se calculan promedio y porcentajes.
+Salidas: promedio, mayor, menor, cantidad y % de aprobados, cantidad y % de reprobados.
+
+Pseudocódigo:
+Algoritmo EstadisticasCurso
+    Definir n, i, ap, rep Como Entero
+    Definir nota, suma, mayor, menor Como Real
+    Definir promedio, pAp, pRep Como Real
+    suma <- 0
+    mayor <- -1
+    menor <- 11
+    ap <- 0
+    rep <- 0
+    Escribir "Ingrese el número de estudiantes: "
+    Leer n
+    Para i <- 1 Hasta n Con Paso 1 Hacer
+        Repetir
+            Escribir "Nota del estudiante ", i, " (0-10): "
+            Leer nota
+        Hasta Que nota >= 0 Y nota <= 10
+        suma <- suma + nota
+        Si nota > mayor Entonces
+            mayor <- nota
+        FinSi
+        Si nota < menor Entonces
+            menor <- nota
+        FinSi
+        Si nota >= 7 Entonces
+            ap <- ap + 1
+        SiNo
+            rep <- rep + 1
+        FinSi
+    FinPara
+    promedio <- suma / n
+    pAp <- ap * 100 / n
+    pRep <- rep * 100 / n
+    Escribir "Promedio: ", promedio
+    Escribir "Nota mayor: ", mayor
+    Escribir "Nota menor: ", menor
+    Escribir "Aprobados: ", ap, " (", pAp, "%)"
+    Escribir "Reprobados: ", rep, " (", pRep, "%)"
+FinAlgoritmo
